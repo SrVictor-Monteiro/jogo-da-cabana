@@ -10,7 +10,7 @@
 <body>
     <button id="btnInventario">Inventário</button>
 
-    <div id="inventarioBox"" class="hidden">
+    <div id="inventarioBox" class="hidden">
         <h3>Lista</h3>
         <ul id="listaInventario"></ul>
     </div>
@@ -27,12 +27,14 @@
         <button onclick="startGame()">Abrir os olhos</button>
     </div>
 
+    <!-- Música de fundo -->
    <audio id="bg-music" loop>
         <source src="audio/track.mp3" type="audio/mpeg">
         Seu navegador não suporta áudio.
     </audio>
 
-    <button id="audio-toggle" onclick="toggleAudio()">
+    <!-- Botão de mutar -->
+    <button id="audio-toggle">
         <img id="audio-icon" src="icons/audio-icon.png" alt="Alternar som" width="32">
     </button>
 
@@ -47,5 +49,6 @@
     <script src="js/inventory.js"></script>
     <script src="js/typewriter.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/audio-control.js"></script>
 </body>
 </html>

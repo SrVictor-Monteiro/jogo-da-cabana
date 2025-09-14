@@ -282,35 +282,39 @@ Mas um mecanismo escondido faz a lamparina pendurada cair sobre a cama. O fogo s
     choices.innerHTML = ""; // limpa as opções
 
     if (estado.temAgua && !estado.copoJogadoFora) {
-  const btnUsarAgua = document.createElement("button");
-  btnUsarAgua.textContent = "Usar água do copo para apagar o fogo";
-  btnUsarAgua.onclick = () => {
-    apagarFogo();
-  };
-  choices.appendChild(btnUsarAgua);
+      const btnUsarAgua = document.createElement("button");
+      btnUsarAgua.textContent = "Usar água do copo para apagar o fogo";
+      btnUsarAgua.onclick = () => apagarFogo(mostrarOpcoesQuartoPosBarril); // Passa a próxima cena
+      choices.appendChild(btnUsarAgua);
 
-  const btnNaoUsar = document.createElement("button");
-  btnNaoUsar.textContent = "Apagar com as mãos";
-  btnNaoUsar.onclick = () => {
-    morteFogo();
-  };
-  choices.appendChild(btnNaoUsar);
-} else {
-  // Só apagar com as mãos (morte)
-  const btnApagarMaos = document.createElement("button");
-  btnApagarMaos.textContent = "Apagar com as mãos";
-  btnApagarMaos.onclick = () => {
-    morteFogo();
-  };
-  choices.appendChild(btnApagarMaos);
-}
-
+      const btnNaoUsar = document.createElement("button");
+      btnNaoUsar.textContent = "Apagar com as mãos";
+      btnNaoUsar.onclick = () => morteFogo();
+      choices.appendChild(btnNaoUsar);
+    } else {
+      const btnApagarMaos = document.createElement("button");
+      btnApagarMaos.textContent = "Apagar com as mãos";
+      btnApagarMaos.onclick = () => morteFogo();
+      choices.appendChild(btnApagarMaos);
+    }
   });
 }
 
-
 function apagarFogo() {
-  typeText(storyText, choices, `Você joga a água do copo sobre as chamas, apagando o fogo. Escapou por pouco! -"Meu Deus... querem mesmo me matar!`, proximaCena);
+  typeText(storyText, choices, `
+Você joga a água do copo sobre as chamas no lençol, enquanto abafa com as mãos o restante. 
+Você apaga o fogo antes de se alastrar, mas suas mãos estão machucadas.
+-"Meu Deus... querem mesmo me matar!"`, mostrarOpcaoDescerEscadas);
+}
+
+function mostrarOpcaoDescerEscadas() {
+  choices.innerHTML = "";
+
+  const btnDescer = document.createElement("button");
+  btnDescer.textContent = "Descer escadas";
+  btnDescer.onclick = descerEscadas;
+
+  choices.appendChild(btnDescer);
 }
 
 function morteFogo() {
@@ -319,7 +323,7 @@ function morteFogo() {
 
   const texto = `
 Você queima suas mãos sem sucesso...
-As chamas tomam o quarto em segundos.
+As chamas tomam o quarto em segundos ao atingir a gasolina.
 
 Fim de jogo.`;
   typeText(storyText, choices, texto, () => {
@@ -329,4 +333,83 @@ Fim de jogo.`;
     btnRecomecar.onclick = startGame;
     choices.appendChild(btnRecomecar);
   });
+}
+
+// Sala de estar
+function descerEscadas() {
+  //som escada
+  const somEscadas = new Audio("audio/stairs.mp3");
+  somEscadas.play();
+
+  //texto ao descer
+  const texto = `
+  Você desce a escada cuidadosamente. 
+  O som dos seus passos ecoa pela cabana, mas finalmente você chega à sala de estar. 
+  A luz é fraca, e o ar sombrio do ambiente te arrepia.
+  `;
+
+  // ao terminar audio
+  somEscadas.onended = () => {
+    typeText(storyText, choices, texto, mostrarOpcoesSalaEstar);
+  };
+}
+
+function mostrarOpcoesSalaEstar() {
+  choices.innerHTML = "";
+
+  const btnOlharSala = document.createElement("button");
+  btnOlharSala.textContent = "Olhar ao redor";
+  btnOlharSala.onclick = () => {
+    typeText(storyText, choices, "Você olha ao redor da sala de estar, mas nada se destaca por enquanto.", mostrarOpcoesSalaEstar);
+  };
+  choices.appendChild(btnOlharSala);
+
+  // Botão para voltar ao andar de cima (quarto)
+  const btnAndarCima = document.createElement("button");
+  btnAndarCima.textContent = "Voltar para o andar de cima";
+  btnAndarCima.onclick = () => {
+    subirEscadasParaQuarto(); // retorna para a cena do quarto
+  };
+  choices.appendChild(btnAndarCima);
+}
+
+function subirEscadasParaQuarto() {
+  // som de escadas
+  const somEscadas = new Audio("audio/stairs.mp3");
+  somEscadas.play();
+
+  const texto = `
+Você volta ao andar de cima. 
+Está escuro, mas uma luz pela janela ilumina parcialmente a cama queimada. 
+O cheiro de gasolina ainda persiste no ar.
+  `;
+
+  // espera o áudio terminar antes de mostrar o texto
+  somEscadas.onended = () => {
+    typeText(storyText, choices, texto, mostrarOpcoesJanela);
+  };
+}
+
+
+function mostrarOpcoesJanela() {
+  choices.innerHTML = "";
+
+  // Botão para observar a janela
+  const btnObservarJanela = document.createElement("button");
+  btnObservarJanela.textContent = "Observar a janela";
+  btnObservarJanela.onclick = () => {
+    const textoJanela = `
+Você se aproxima da janela. 
+Ela está emperrada; a madeira inchou com a umidade e a ferrugem travou as dobradiças. 
+É impossível abrir sem algum tipo de ferramenta para forçar a abertura.
+    `;
+    typeText(storyText, choices, textoJanela, mostrarOpcoesJanela);
+  };
+  choices.appendChild(btnObservarJanela);
+
+  // Botão para retornar ao andar de baixo
+  const btnVoltarAndarBaixo = document.createElement("button");
+  btnVoltarAndarBaixo.textContent = "Voltar para a sala de estar";
+  btnVoltarAndarBaixo.onclick = descerEscadas; // ou outra função que retorna à sala
+  choices.appendChild(btnVoltarAndarBaixo);
 }

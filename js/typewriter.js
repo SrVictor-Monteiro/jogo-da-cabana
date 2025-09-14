@@ -16,5 +16,6 @@ function typeText(containerText, containerChoices, text, callback = null) {
       containerChoices.classList.remove("hidden");
       if (callback) callback();
     }
-  }, 3);
+  }, 1);
 }
+//regular para "30" quando acabar

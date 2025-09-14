@@ -59,7 +59,12 @@ body::before {
   background: transparent;
   border: none;           
   cursor: pointer;        
-  z-index: 10;            
+  z-index: 10;   
+  transition: transform 0.1s; /* animação do clique */
+}
+
+#audio-toggle:active {
+  transform: scale(0.9); /* efeito de apertar */
 }
 
 /* Estilo da imagem dentro do botão */
