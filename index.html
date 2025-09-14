@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Cabana do Fim</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="reset.css">
+</head>
+<body>
+    <button id="btnInventario">Inventário</button>
+
+    <div id="inventarioBox"" class="hidden">
+        <h3>Lista</h3>
+        <ul id="listaInventario"></ul>
+    </div>
+
+    <div class="container">
+        <h1>A cabana do fim</h1>
+    </div>
+
+    <div id="story-box">
+        <p id="story-text">Acordar?</p>
+    </div>
+
+    <div id="choices">
+        <button onclick="startGame()">Abrir os olhos</button>
+    </div>
+
+   <audio id="bg-music" loop>
+        <source src="audio/track.mp3" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    </audio>
+
+    <button id="audio-toggle" onclick="toggleAudio()">
+        <img id="audio-icon" src="icons/audio-icon.png" alt="Alternar som" width="32">
+    </button>
+
+    <div id="popup" class="popup hidden">
+        <div class="popup-content">
+            <span id="fecharPopup" class="fechar">&times;</span>
+            <p id="popupTexto"></p>
+        </div>
+    </div>
+    
+    <script src="js/state.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/typewriter.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
